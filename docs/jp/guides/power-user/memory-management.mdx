@@ -1,10 +1,10 @@
 ---
-title: "メモリとコンテキスト管理"
+title: Memory and Context Management
 description: Build persistent memory so Droid remembers your preferences, decisions, and project history across sessions.
 keywords: ['memory', 'context', 'preferences', 'persistent', 'sessions', 'history', 'memories']
 ---
 
-Droidはセッション間で組み込みのメモリを持ちませんが、markdownファイル、AGENTS.mdの参照、およびフックを使用して強力なメモリシステムを作成できます。このガイドでは、永続化され成長するメモリの構築方法を説明します。
+Droid doesn't have built-in memory between sessions, but you can create a powerful memory system using markdown files, AGENTS.md references, and hooks. This guide shows you how to build memory that persists and grows.
 
 <Info>
   **Works with Factory App:** These memory patterns work identically in both CLI and [Factory App](/web/getting-started/overview)—just ensure your working directory is set to your repository root.
@@ -12,9 +12,9 @@ Droidはセッション間で組み込みのメモリを持ちませんが、mar
 
 ---
 
-## メモリシステムアーキテクチャ
+## The Memory System Architecture
 
-メモリシステムは3つの層で構成されます：
+Your memory system consists of three layers:
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -37,13 +37,13 @@ Droidはセッション間で組み込みのメモリを持ちませんが、mar
 
 ---
 
-## 個人メモリの設定
+## Setting Up Personal Memory
 
-個人メモリはすべてのプロジェクトで共有されます。
+Personal memory follows you across all projects.
 
-### ステップ1：メモリファイルの作成
+### Step 1: Create the Memory File
 
-`~/.factory/memories.md`を作成します：
+Create `~/.factory/memories.md`:
 
 ```markdown
 # My Development Memory
@@ -82,9 +82,9 @@ Droidはセッション間で組み込みのメモリを持ちませんが、mar
 - [2024-03] Using Supabase for personal projects
 ```
 
-### ステップ2：AGENTS.mdで参照
+### Step 2: Reference in AGENTS.md
 
-`~/.factory/AGENTS.md`またはプロジェクトの`AGENTS.md`に追加します：
+Add to your `~/.factory/AGENTS.md` or project `AGENTS.md`:
 
 ```markdown
 ## Personal Preferences
@@ -94,13 +94,13 @@ Refer to this file when making decisions about code style, architecture, or tool
 
 ---
 
-## プロジェクトメモリの設定
+## Setting Up Project Memory
 
-プロジェクトメモリは、コードベース固有の決定とコンテキストを記録します。
+Project memory captures decisions and context specific to a codebase.
 
-### ステップ1：プロジェクトメモリの作成
+### Step 1: Create Project Memory
 
-プロジェクトルートに`.factory/memories.md`を作成します：
+Create `.factory/memories.md` in your project root:
 
 ```markdown
 # Project Memory
@@ -154,9 +154,9 @@ Refer to this file when making decisions about code style, architecture, or tool
 - Deploy to production on merge to `main`
 ```
 
-### ステップ2：プロジェクトAGENTS.mdで参照
+### Step 2: Reference in Project AGENTS.md
 
-プロジェクトの`AGENTS.md`を更新します：
+Update your project's `AGENTS.md`:
 
 ```markdown
 ## Project Memory
@@ -166,12 +166,12 @@ Always check this file before making significant architectural or design decisio
 
 ---
 
-## メモリカテゴリ
+## Memory Categories
 
-メモリを有用なカテゴリに整理します：
+Organize your memories into useful categories:
 
-### 設定（個人）
-あなたの好みと作業方法：
+### Preferences (Personal)
+What you like and how you work:
 
 ```markdown
 ## Preferences
@@ -181,8 +181,8 @@ Always check this file before making significant architectural or design decisio
 - Learning style
 ```
 
-### 決定（プロジェクト）
-何が決定され、その理由：
+### Decisions (Project)
+What was decided and why:
 
 ```markdown
 ## Decisions
@@ -192,8 +192,8 @@ Always check this file before making significant architectural or design decisio
 - Standards agreed upon
 ```
 
-### コンテキスト（プロジェクト）
-背景情報：
+### Context (Project)
+Background information:
 
 ```markdown
 ## Context
@@ -203,8 +203,8 @@ Always check this file before making significant architectural or design decisio
 - Performance requirements
 ```
 
-### 履歴（両方）
-いつ何が起こったか：
+### History (Both)
+What happened when:
 
 ```markdown
 ## History
@@ -216,15 +216,15 @@ Always check this file before making significant architectural or design decisio
 
 ---
 
-## 自動メモリ取得
+## Automatic Memory Capture
 
-作業中にメモリを取得するのに役立つフックを作成します。
+Create a hook that helps you capture memories as you work.
 
-### 「これを記憶」フック
+### The "Remember This" Hook
 
-「remember this:」の後にコンテンツを続けると、自動的にメモリに追加されます。
+When you say "remember this:" followed by content, automatically append to memories.
 
-メモリキャプチャは**特殊文字**または**フレーズ**のいずれかでトリガーできます。好みに基づいて選択してください：
+You can trigger memory capture with either **special characters** or **phrases**. Choose based on your preference:
 
 <Tabs>
   <Tab title="# prefix trigger">
@@ -331,13 +331,13 @@ Always check this file before making significant architectural or design decisio
   </Tab>
 </Tabs>
 
-実行可能にし、フックを設定します：
+Make it executable and configure the hook:
 
 ```bash
 chmod +x ~/.factory/hooks/memory-capture.py
 ```
 
-`/hooks`を使用してフック設定に追加します：
+Add to your hooks configuration via `/hooks`:
 
 ```json
 {
@@ -357,23 +357,23 @@ chmod +x ~/.factory/hooks/memory-capture.py
 }
 ```
 
-**#プレフィックス使用：**
+**With # prefix:**
 - "#we decided to use Zustand for state management"
-- "##I prefer early returns" （ダブル`##`は個人用に保存）
+- "##I prefer early returns" (double `##` saves to personal)
 
-**フレーズトリガー使用：**
+**With phrase triggers:**
 - "Remember this: we decided to use Zustand for state management"
 - "Note: the auth module uses JWT with 24-hour expiration"
 
-### 代替案：メモリキャプチャスキル
+### Alternative: Memory Capture Skill
 
-フックの代わりに、何かを記憶するように依頼したときにDroidが呼び出す[skill](/cli/configuration/skills)を使用できます。これにより、カテゴリ化をよりインタラクティブに制御できます。
+Instead of a hook, you can use a [skill](/cli/configuration/skills) that Droid invokes when you ask to remember something. This gives you more interactive control over categorization.
 
-### 代替案：カスタムスラッシュコマンド
+### Alternative: Custom Slash Command
 
-手動での素早い取得には、[custom slash command](/cli/configuration/custom-slash-commands)を作成します：
+For quick manual capture, create a [custom slash command](/cli/configuration/custom-slash-commands):
 
-`~/.factory/commands/remember.md`を作成：
+Create `~/.factory/commands/remember.md`:
 
 ```markdown
 ---
@@ -388,7 +388,7 @@ $ARGUMENTS
 Format it appropriately based on whether it's a preference, decision, or learning. Include today's date.
 ```
 
-その後、`/remember we chose PostgreSQL for better ACID compliance`を使用してメモリをオンデマンドで取得します。
+Then use `/remember we chose PostgreSQL for better ACID compliance` to capture memories on demand.
 
 <Info>
   **Which approach to choose?**
@@ -399,11 +399,11 @@ Format it appropriately based on whether it's a preference, decision, or learnin
 
 ---
 
-## メモリメンテナンス
+## Memory Maintenance
 
-定期的なメンテナンスでメモリを有用に保ちます。
+Keep your memories useful with regular maintenance.
 
-### 月次レビューチェックリスト
+### Monthly Review Checklist
 
 ```markdown
 ## Monthly Memory Review
@@ -421,9 +421,9 @@ Format it appropriately based on whether it's a preference, decision, or learnin
 - [ ] Document recent major changes
 ```
 
-### 古いメモリのアーカイブ
+### Archiving Old Memories
 
-メモリが古くなったら、アーカイブに移動します：
+When memories become stale, move them to an archive:
 
 ```markdown
 # memories.md
@@ -445,9 +445,9 @@ Format it appropriately based on whether it's a preference, decision, or learnin
 
 ---
 
-## 上級：メモリ対応スキル
+## Advanced: Memory-Aware Skills
 
-メモリファイルを活用するスキルを作成します：
+Create skills that leverage your memory files:
 
 ```markdown
 ---
@@ -477,27 +477,27 @@ Then implement following all discovered context.
 
 ---
 
-## クイックリファレンス
+## Quick Reference
 
-### ファイル場所
+### File Locations
 
-| メモリタイプ | 場所 | スコープ |
-|-------------|------|---------|
-| 個人設定 | `~/.factory/memories.md` | 全プロジェクト |
-| プロジェクト決定 | `.factory/memories.md` | このプロジェクト |
-| チーム規約 | `.factory/rules/*.md` | このプロジェクト |
+| Memory Type | Location | Scope |
+|-------------|----------|-------|
+| Personal preferences | `~/.factory/memories.md` | All projects |
+| Project decisions | `.factory/memories.md` | This project |
+| Team conventions | `.factory/rules/*.md` | This project |
 
-### メモリを追加するタイミング
+### When to Add Memories
 
-| イベント | 記録内容 | 場所 |
-|---------|-----------|-------|
-| アーキテクチャ決定を行った | 決定 + 理由 | プロジェクト |
-| 設定を発見した | 好み | 個人 |
-| ドメイン知識を学んだ | ビジネスルール、エンティティ | プロジェクト |
-| ワークフローを変更した | 新しいツールやパターン | 個人 |
-| 複雑な問題を解決した | 解決策とコンテキスト | プロジェクト |
+| Event | What to Record | Where |
+|-------|---------------|-------|
+| Made an architecture decision | Decision + reasoning | Project |
+| Discovered a preference | What you prefer | Personal |
+| Learned domain knowledge | Business rules, entities | Project |
+| Changed your workflow | New tool or pattern | Personal |
+| Resolved a tricky issue | Solution and context | Project |
 
-### メモリフォーマットテンプレート
+### Memory Format Template
 
 ```markdown
 ### [Date]: [Title]
@@ -509,7 +509,7 @@ Then implement following all discovered context.
 
 ---
 
-## 次のステップ
+## Next Steps
 
 <CardGroup cols={2}>
   <Card title="Setup Checklist" href="/guides/power-user/setup-checklist" icon="list-check">
