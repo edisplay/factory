@@ -4,6 +4,37 @@ description: "Recent features and improvements to the Factory App, Droid CLI, an
 rss: true
 ---
 
+<Update label="July 28" rss={{ title: "CLI Updates", description: "Audit log scope filter, user removal from the Admin Console, and authentication, session, and connection fixes" }}>
+  `v0.182.0`
+
+## New features
+
+- **Audit log scope filter** - You can now filter the audit log by scope to narrow activity down to what you care about (app)
+- **Remove users** - Admins can now remove users from their organization in the Admin Console (app)
+- **Copy images** - Right-click an image to copy it from the desktop app (app)
+- **Image thumbnails** - Artifact preview cards in chat now show image thumbnails (app)
+
+## Improvements
+
+- **Re-authentication** - The sign-in prompt now selects re-authentication by default when your session has expired
+- **Connection reliability** - Connections to your local machine now hold up through slower startups and networks (app)
+- **Custom model overrides** - The admin view now names the users who have custom model overrides (app)
+
+## Bug fixes
+
+- **Expired sessions** - The CLI now shows a clear authentication error instead of failing without explanation
+- **Forked sessions** - Forked sessions now sync so they appear in your session history everywhere
+- **AGENTS.md context** - `AGENTS.md` files are no longer added to context more than once
+- **Session and mission pickers** - Typing `q` in the session and mission pickers no longer closes them
+- **Header status** - The header now reflects which tool is actually running
+- **Transcript order** - Session transcripts stay in chronological order even when clocks disagree
+- **BYOK model names** - Bring-your-own-key models no longer show an extra suffix in their names
+- **Git provider connect** - Connecting a Git provider no longer fails when a single repository can't be read
+- **Connection errors** - The app now explains why a connection to your local machine failed (app)
+- **`/btw` focus** - `/btw` now focuses the side chat so you can start typing right away (app)
+
+</Update>
+
 <Update label="July 27" rss={{ title: "CLI Updates", description: "Slash commands while the agent runs, MCP OAuth resource override, and subagent and Git fixes" }}>
   `v0.181.0`
 
